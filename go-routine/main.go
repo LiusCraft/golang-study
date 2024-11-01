@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"math"
+	"sync"
 	"time"
 )
 
@@ -19,30 +21,14 @@ func test(ctx context.Context, duration time.Duration) {
 }
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
-	ctx.Value("wawdadw")
-	defer cancel()
-
-	go test(ctx, 1500*time.Millisecond)
-	select {
-	case <-ctx.Done():
-		fmt.Println("main", ctx.Err())
-	}
-	go func() {
-		i := 0
-		for {
-			i++
-			fmt.Printf("new goroutine: i = %d\n", i)
+	var wg sync.WaitGroup
+	for i := 0; i < math.MaxInt32; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			fmt.Println(i)
 			time.Sleep(time.Second)
-		}
-	}()
-	i := 0
-	for {
-		i++
-		fmt.Printf("main goroutine: i = %d\n", i)
-		time.Sleep(time.Second)
-		if i == 2 {
-			break
-		}
+		}(i)
 	}
+	wg.Wait()
 }
