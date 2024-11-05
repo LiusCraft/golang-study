@@ -53,7 +53,18 @@ func (s Slice[T]) Sort() {
 	})
 }
 
+func FunctionGenericTypeToAdd[T int | float64](a, b T) T {
+	return a + b
+}
+
 func TestSlice(t *testing.T) {
+
+	if ret := FunctionGenericTypeToAdd(1, 2); ret != 3 {
+		t.Errorf("FunctionGenericTypeToAdd should be 3, got %v", ret)
+	}
+	if ret := FunctionGenericTypeToAdd(1.3, 2.8); ret != 4.1 {
+		t.Errorf("FunctionGenericTypeToAdd should be 4.1, got %v", ret)
+	}
 	s := Slice[int]{3, 2, 1, 5, 4}
 	expected := Slice[int]{1, 2, 3, 4, 5}
 	s.Sort()
