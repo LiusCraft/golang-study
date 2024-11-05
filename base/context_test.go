@@ -37,4 +37,5 @@ func TestSetPointValue(t *testing.T) {
 
 	// 打印更新后的值
 	fmt.Println("After maiaan:", (*updatedCtx.Value("key").(*string)))
+
 }
