@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -23,3 +24,14 @@ func TestJsonUnmarshal(t *testing.T) {
 	a.Change()
 	t.Logf("%#+v, %#+v", a, a.B)
 }
+
+func testfff() {
+	fmt.Println("testfff successed")
+}
+
+func TestPointToId(t *testing.T) {
+	funs := map[string]func(){}
+	funs[fmt.Sprintf("%p", testfff)] = testfff
+	funs[fmt.Sprintf("%p", testfff)]()
+}
+	
